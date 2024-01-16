@@ -3,6 +3,9 @@ import { Text, View, StyleSheet, Alert } from 'react-native';
 import Title from '../components/ui/Title';
 import NumberContainer from '../components/game/NumberContainer';
 import PrimaryButton from '../components/ui/PrimaryButton';
+import Card from '../components/ui/Card';
+import InstructionText from '../components/ui/InstructionText';
+import { Ionicons } from '@expo/vector-icons';
 
 function generateRandomBetween(min, max, exclude) {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -57,20 +60,24 @@ function GameScreen({ userNumber, onGameOver }) {
     <View style={styles.screen}>
       <Title>Oppent's Guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
-      <View>
-        <Text>Higher or Lower?</Text>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={nextGuesshandler.bind(this, 'lower')}>
-            -
-          </PrimaryButton>
-          <PrimaryButton onPress={nextGuesshandler.bind(this, 'greater')}>
-            +
-          </PrimaryButton>
+      <Card>
+        <InstructionText style={styles.InstructionText}>
+          Higher or Lower?
+        </InstructionText>
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuesshandler.bind(this, 'lower')}>
+              <Ionicons name="md-remove" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuesshandler.bind(this, 'greater')}>
+              <Ionicons name="md-add" size={24} color="white" />
+            </PrimaryButton>
+          </View>
         </View>
-      </View>
-      <View>
-        <Text>LOG ROUNDS</Text>
-      </View>
+      </Card>
+      <View>{/* <Text>LOG ROUNDS</Text> */}</View>
     </View>
   );
 }
@@ -82,9 +89,15 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
   },
-  buttonContainer: {
+  InstructionText: {
+    marginBottom: 12,
+  },
+  buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
+    gap: 16,
+  },
+  buttonContainer: {
+    flex: 1,
   },
 });
